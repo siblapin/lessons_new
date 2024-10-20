@@ -14,6 +14,7 @@ class Alpha16 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        title: 'TEST',
         theme: ThemeData(fontFamily: 'gilroy-bold'),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
