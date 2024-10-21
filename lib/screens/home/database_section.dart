@@ -11,7 +11,7 @@ class DatabaseSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.only(top: 20, left: 20, right: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -19,16 +19,22 @@ class DatabaseSection extends StatelessWidget {
               "Last saved dhikrs",
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
-            WidgetApp(
-                number: 14,
-                title: 'Name of the file dhikr',
-                date: '19.02.2021'),
-            WidgetApp(
-                number: 9, title: 'Name of the file dhikr', date: '18.02.2021'),
-            WidgetApp(
-                number: 15,
-                title: 'Name of the file dhikr',
-                date: '14.02.2021'),
+            Container(
+              margin: EdgeInsets.only(top: 2, bottom: 10),
+              color: blueCustom,
+              width: 70,
+              height: 3,
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 200,
+                  itemBuilder: (context, index) {
+                    return WidgetApp(
+                        number: index,
+                        date: '21.10.2024',
+                        title: 'Description Dhikr');
+                  }),
+            ),
           ],
         ),
         height: 500,
@@ -54,13 +60,16 @@ class WidgetApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 309,
+      margin: EdgeInsets.only(bottom: 5),
+      decoration: BoxDecoration(
+          color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
+      width: double.infinity,
       height: 49,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-              width: 24,
+              width: 40,
               height: 24,
               child: Center(
                   child: Text(
@@ -78,9 +87,9 @@ class WidgetApp extends StatelessWidget {
                   color: greyCustom,
                   fontFamily: 'gilroy-medium')),
           Container(
-            height: 15,
-            width: 15,
-            child: SvgPicture.asset('assets/images/Group4.svg'),
+            height: double.infinity,
+            width: 50,
+            child: Center(child: SvgPicture.asset('assets/images/Group4.svg')),
           )
         ],
       ),

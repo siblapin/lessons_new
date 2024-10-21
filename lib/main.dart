@@ -25,8 +25,9 @@ class Alpha16 extends StatelessWidget {
                   child: Container(
                       child: Column(
                     children: [
+                      SizedBox(height: 10),
                       TopSection(),
-                      SizedBox(height: 24),
+                      SizedBox(height: 20),
                       CounterSection(),
                       SizedBox(height: 20),
                       SaveDhikr(),
