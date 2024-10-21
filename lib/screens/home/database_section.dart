@@ -1,4 +1,5 @@
 import 'package:alpha16/constants/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,7 +12,7 @@ class DatabaseSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+        padding: EdgeInsets.only(top: 20, left: 15, right: 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -70,7 +71,6 @@ class WidgetApp extends StatelessWidget {
         children: [
           Container(
               width: 40,
-              height: 24,
               child: Center(
                   child: Text(
                 "$number",
@@ -80,16 +80,44 @@ class WidgetApp extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontFamily: 'gilroy-medium'),
               ))),
-          Text("$title"),
+          Container(
+            margin: EdgeInsets.only(right: 30, left: 20),
+            child: Text("$title",
+                style: TextStyle(fontSize: 12, fontFamily: 'gilroy-bold')),
+          ),
           Text("$date",
               style: TextStyle(
                   fontSize: 10,
                   color: greyCustom,
                   fontFamily: 'gilroy-medium')),
-          Container(
-            height: double.infinity,
-            width: 50,
-            child: Center(child: SvgPicture.asset('assets/images/Group4.svg')),
+          GestureDetector(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CupertinoAlertDialog(
+                      title: Text('Edit Dhikr'),
+                      content: Column(children: [
+                        SizedBox(height: 15),
+                        Text("Counter:33"),
+                        SizedBox(height: 10),
+                        CupertinoTextField(
+                          placeholder: 'Description Dhikr',
+                        )
+                      ]),
+                      actions: [
+                        TextButton(onPressed: null, child: Text('Cancel')),
+                        TextButton(onPressed: null, child: Text('Save'))
+                      ],
+                    );
+                  });
+            },
+            child: Container(
+              color: Colors.grey[100],
+              width: 70,
+              child:
+                  Center(child: SvgPicture.asset('assets/images/Group4.svg')),
+            ),
           )
         ],
       ),
