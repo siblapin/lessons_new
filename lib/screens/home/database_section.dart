@@ -95,21 +95,7 @@ class WidgetApp extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return CupertinoAlertDialog(
-                      title: Text('Edit Dhikr'),
-                      content: Column(children: [
-                        SizedBox(height: 15),
-                        Text("Counter:33"),
-                        SizedBox(height: 10),
-                        CupertinoTextField(
-                          placeholder: 'Description Dhikr',
-                        )
-                      ]),
-                      actions: [
-                        TextButton(onPressed: null, child: Text('Cancel')),
-                        TextButton(onPressed: null, child: Text('Save'))
-                      ],
-                    );
+                    return DialogApp();
                   });
             },
             child: Container(
@@ -121,6 +107,37 @@ class WidgetApp extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+
+  CupertinoAlertDialog DialogApp() {
+    return CupertinoAlertDialog(
+      title: Text('Edit Dhikr'),
+      content: Column(children: [
+        SizedBox(height: 15),
+        Text("Counter: 33"),
+        SizedBox(height: 10),
+        CupertinoTextField(
+          placeholder: 'Description Dhikr',
+        ),
+        SizedBox(height: 20),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            TextButton(
+                onPressed: () {},
+                child: Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red[300]),
+                )),
+            TextButton(
+                style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(blueCustom)),
+                onPressed: () {},
+                child: Text('Save', style: TextStyle(color: Colors.white)))
+          ],
+        )
+      ]),
     );
   }
 }
