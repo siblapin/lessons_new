@@ -2,10 +2,41 @@ import 'package:alpha16/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CounterSection extends StatelessWidget {
+class CounterSection extends StatefulWidget {
   const CounterSection({
     super.key,
   });
+
+  @override
+  State<CounterSection> createState() => _CounterSectionState();
+}
+
+class _CounterSectionState extends State<CounterSection> {
+  int counter = 0;
+  void add_number() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  void reset_number() {
+    if (counter > 0) {
+      setState(() {
+        counter = 0;
+      });
+    }
+    ;
+  }
+
+  void del_number() {
+    if (counter > 0) {
+      setState(() {
+        counter--;
+      });
+    } else {
+      counter = 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,30 +44,40 @@ class CounterSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            width: 35,
-            height: 35,
-            child: SvgPicture.asset('assets/images/Group2.svg'),
-          ),
-          Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("33", style: TextStyle(color: Colors.white, fontSize: 48)),
-                Text("Dhikr",
-                    style: TextStyle(color: Colors.white, fontSize: 12))
-              ],
+          GestureDetector(
+            onTap: () => del_number(),
+            child: Container(
+              width: 35,
+              height: 35,
+              child: SvgPicture.asset('assets/images/Group2.svg'),
             ),
-            decoration: BoxDecoration(
-                color: blueCustom,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            width: 154,
-            height: 154,
           ),
-          Container(
-            child: SvgPicture.asset('assets/images/Group3.svg'),
-            width: 35,
-            height: 35,
+          GestureDetector(
+            onTap: () => add_number(),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("$counter",
+                      style: TextStyle(color: Colors.white, fontSize: 48)),
+                  Text("Dhikr",
+                      style: TextStyle(color: Colors.white, fontSize: 12))
+                ],
+              ),
+              decoration: BoxDecoration(
+                  color: blueCustom,
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              width: 154,
+              height: 154,
+            ),
+          ),
+          GestureDetector(
+            onTap: () => reset_number(),
+            child: Container(
+              child: SvgPicture.asset('assets/images/Group3.svg'),
+              width: 35,
+              height: 35,
+            ),
           ),
         ],
       ),
