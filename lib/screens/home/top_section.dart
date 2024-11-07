@@ -1,6 +1,9 @@
 import 'package:alpha16/constants/constants.dart';
+import 'package:alpha16/main.dart';
+import 'package:alpha16/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 class TopSection extends StatefulWidget {
   const TopSection({
@@ -12,42 +15,36 @@ class TopSection extends StatefulWidget {
 }
 
 class _TopSectionState extends State<TopSection> {
-  bool switchSection = true;
-
-  void switchWiggets(bool toggle) {
-    print(switchSection);
-    if (switchSection != toggle) {
-      setState(() => switchSection = toggle);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final activity =
+        context.findAncestorStateOfType<HomeScreenState>()?.activity ?? true;
+    final toggleActivity =
+        context.findAncestorStateOfType<HomeScreenState>()!.toggleActivity;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          padding: EdgeInsets.all(4),
-          width: 276,
-          height: 38,
-          child: Row(
-            children: [
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            padding: EdgeInsets.all(4),
+            width: 276,
+            height: 38,
+            child: Row(children: [
 //Activity
               GestureDetector(
-                onTap: () => switchWiggets(true),
+                onTap: () => toggleActivity(true),
                 child: Container(
                   child: Center(
                       child: Text(
                     'Activity',
-                    style: switchSection
+                    style: activity == true
                         ? TextStyle(color: Colors.white)
                         : TextStyle(color: blueCustom),
                   )),
                   decoration: BoxDecoration(
-                      color: switchSection ? blueCustom : Colors.white,
+                      color: activity == true ? blueCustom : Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(8))),
                   width: 134,
                   height: 30,
@@ -56,32 +53,35 @@ class _TopSectionState extends State<TopSection> {
 
 //Saved
               GestureDetector(
-                onTap: () => switchWiggets(false),
-                child: Container(
-                  child: Center(
-                      child: Text(
-                    'Saved',
-                    style: switchSection == false
-                        ? TextStyle(color: Colors.white)
-                        : TextStyle(color: greyCustom),
-                  )),
-                  decoration: BoxDecoration(
-                      color: switchSection == false ? blueCustom : Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
-                  width: 134,
-                  height: 30,
-                ),
-              ),
-            ],
+                  onTap: () => toggleActivity(false),
+                  child: Container(
+                      child: Center(
+                          child: Text(
+                        'Saved',
+                        style: activity == false
+                            ? TextStyle(color: Colors.white)
+                            : TextStyle(color: greyCustom),
+                      )),
+                      decoration: BoxDecoration(
+                          color: activity == false ? blueCustom : Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                      width: 134,
+                      height: 30))
+            ])),
+
+//settings
+        GestureDetector(
+          onTap: () {
+            context.go("/settings");
+          },
+          child: Container(
+            child: Center(child: SvgPicture.asset('assets/images/Group1.svg')),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            width: 54,
+            height: 38,
           ),
-        ),
-        Container(
-          child: Center(child: SvgPicture.asset('assets/images/Group1.svg')),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          width: 54,
-          height: 38,
         )
       ],
     );
