@@ -2,6 +2,7 @@ import 'package:alpha16/constants/constants.dart';
 import 'package:alpha16/models/dhikr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 //Cписок  dhikrs
 //Виджет списка dhikrs
@@ -37,7 +38,8 @@ class DatabaseSection extends StatelessWidget {
                     index = fakeDataBase.length - 1 - index;
                     return WidgetApp(
                         number: fakeDataBase[index].counter,
-                        date: fakeDataBase[index].data.month.toString(),
+                        date: DateFormat('EEE, d.M.y')
+                            .format(fakeDataBase[index].data),
                         title: fakeDataBase[index].title);
                   }),
             ),
@@ -119,5 +121,5 @@ List<Dhikr> fakeDataBase = [
   Dhikr(counter: 12, title: '2 title', data: DateTime.now()),
   Dhikr(counter: 13, title: '3 title', data: DateTime.now()),
   Dhikr(counter: 14, title: '4 title', data: DateTime.now()),
-  Dhikr(counter: 15, title: '5 ver', data: DateTime.now()),
+  Dhikr(counter: 15, title: '5 title', data: DateTime.now()),
 ];
