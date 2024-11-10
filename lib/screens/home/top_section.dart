@@ -1,9 +1,10 @@
 import 'package:alpha16/constants/constants.dart';
-import 'package:alpha16/main.dart';
 import 'package:alpha16/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+
+//Меню: Activity Saved Settings
 
 class TopSection extends StatefulWidget {
   const TopSection({
@@ -17,10 +18,9 @@ class TopSection extends StatefulWidget {
 class _TopSectionState extends State<TopSection> {
   @override
   Widget build(BuildContext context) {
-    final activity =
-        context.findAncestorStateOfType<HomeScreenState>()?.activity ?? true;
-    final toggleActivity =
-        context.findAncestorStateOfType<HomeScreenState>()!.toggleActivity;
+    final getHomeState = context.findAncestorStateOfType<HomeScreenState>();
+    final activity = getHomeState?.activity ?? true;
+    final toggleActivity = getHomeState!.toggleActivity;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

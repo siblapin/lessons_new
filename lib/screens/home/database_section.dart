@@ -1,8 +1,12 @@
 import 'package:alpha16/constants/constants.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:alpha16/models/dhikr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+//Cписок  dhikrs
+//Виджет списка dhikrs
+
+//Cписок  dhikrs
 class DatabaseSection extends StatelessWidget {
   const DatabaseSection({
     super.key,
@@ -28,12 +32,13 @@ class DatabaseSection extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: 200,
+                  itemCount: fakeDataBase.length,
                   itemBuilder: (context, index) {
+                    index = fakeDataBase.length - 1 - index;
                     return WidgetApp(
-                        number: index,
-                        date: '21.10.2024',
-                        title: 'Description Dhikr');
+                        number: fakeDataBase[index].counter,
+                        date: fakeDataBase[index].data.month.toString(),
+                        title: fakeDataBase[index].title);
                   }),
             ),
           ],
@@ -48,6 +53,7 @@ class DatabaseSection extends StatelessWidget {
   }
 }
 
+//Виджет списка dhikrs
 class WidgetApp extends StatelessWidget {
   WidgetApp(
       {super.key,
@@ -72,14 +78,12 @@ class WidgetApp extends StatelessWidget {
           Container(
               width: 40,
               child: Center(
-                  child: Text(
-                "$number",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: blueCustom,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'gilroy-medium'),
-              ))),
+                  child: Text("$number",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: blueCustom,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'gilroy-medium')))),
           Container(
             margin: EdgeInsets.only(right: 30, left: 20),
             child: Text("$title",
@@ -91,53 +95,29 @@ class WidgetApp extends StatelessWidget {
                   color: greyCustom,
                   fontFamily: 'gilroy-medium')),
           GestureDetector(
-            onTap: () {
-              showDialog(
+              onTap: () {
+                myAlertDialog(
                   context: context,
-                  builder: (context) {
-                    return DialogApp();
-                  });
-            },
-            child: Container(
-              color: Colors.grey[100],
-              width: 70,
-              child:
-                  Center(child: SvgPicture.asset('assets/images/Group4.svg')),
-            ),
-          )
+                  title: title,
+                  counter: number,
+                  delete: true,
+                );
+              },
+              child: Container(
+                  color: Colors.grey[100],
+                  width: 70,
+                  child: Center(
+                      child: SvgPicture.asset('assets/images/Group4.svg'))))
         ],
       ),
     );
   }
-
-  CupertinoAlertDialog DialogApp() {
-    return CupertinoAlertDialog(
-      title: Text('Edit Dhikr'),
-      content: Column(children: [
-        SizedBox(height: 15),
-        Text("Counter: 33"),
-        SizedBox(height: 10),
-        CupertinoTextField(
-          placeholder: 'Description Dhikr',
-        ),
-        SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            TextButton(
-                onPressed: () {},
-                child: Text(
-                  'Delete',
-                  style: TextStyle(color: Colors.red[300]),
-                )),
-            TextButton(
-                style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(blueCustom)),
-                onPressed: () {},
-                child: Text('Save', style: TextStyle(color: Colors.white)))
-          ],
-        )
-      ]),
-    );
-  }
 }
+
+List<Dhikr> fakeDataBase = [
+  Dhikr(counter: 11, title: '1 title', data: DateTime.now()),
+  Dhikr(counter: 12, title: '2 title', data: DateTime.now()),
+  Dhikr(counter: 13, title: '3 title', data: DateTime.now()),
+  Dhikr(counter: 14, title: '4 title', data: DateTime.now()),
+  Dhikr(counter: 15, title: '5 ver', data: DateTime.now()),
+];

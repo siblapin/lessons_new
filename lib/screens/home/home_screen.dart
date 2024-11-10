@@ -4,6 +4,8 @@ import 'package:alpha16/screens/home/database_section.dart';
 import 'package:alpha16/screens/home/top_section.dart';
 import 'package:flutter/material.dart';
 
+//Домашняя страница
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
@@ -22,6 +24,10 @@ class HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void mySetState() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +42,9 @@ class HomeScreenState extends State<HomeScreen> {
                   SizedBox(height: 10),
                   TopSection(),
                   SizedBox(height: 20),
-                  CounterSection(),
+                  Visibility(visible: activity, child: CounterSection()),
                   SizedBox(height: 20),
-                  SaveDhikr(),
+                  SaveDhikr(mySetState),
                   SizedBox(height: 20),
                   DatabaseSection()
                 ],
