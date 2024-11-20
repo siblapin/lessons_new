@@ -6,27 +6,10 @@ import 'package:flutter/material.dart';
 
 //Домашняя страница
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({
     super.key,
   });
-
-  @override
-  State<HomeScreen> createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
-  bool activity = true;
-
-  void toggleActivity(bool toggle) {
-    if (toggle != activity) {
-      setState(() => activity = toggle);
-    }
-  }
-
-  void mySetState() {
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +22,10 @@ class HomeScreenState extends State<HomeScreen> {
               child: Container(
                   child: Column(
                 children: [
-                  SizedBox(height: 10),
-                  TopSection(),
-                  SizedBox(height: 20),
-                  Visibility(visible: activity, child: CounterSection()),
-                  SizedBox(height: 20),
-                  SaveDhikr(mySetState),
-                  SizedBox(height: 20),
-                  DatabaseSection()
+                  const TopSection(),
+                  const CounterSection(),
+                  SaveDhikr(),
+                  const DatabaseSection()
                 ],
               )),
             )));

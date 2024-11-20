@@ -6,8 +6,8 @@ import 'package:intl/intl.dart';
 
 //Cписок  dhikrs
 //Виджет списка dhikrs
-
 //Cписок  dhikrs
+
 class DatabaseSection extends StatelessWidget {
   const DatabaseSection({
     super.key,
