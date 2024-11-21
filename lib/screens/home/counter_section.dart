@@ -1,9 +1,14 @@
 import 'package:alpha16/constants/constants.dart';
+import 'package:alpha16/models/dhikr.dart';
 import 'package:alpha16/providers/counter_provider.dart';
 import 'package:alpha16/providers/top_section_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/database_provider.dart';
 
 // ФУНКЦИЯ добавить единицу
 // ФУНКЦИЯ убавить на единицу
@@ -89,13 +94,39 @@ class SaveDhikr extends StatelessWidget {
       visible: context.watch<TopSectionProvider>().activity,
       child: GestureDetector(
         onTap: () {
-          myAlertDialog(
-            context: context,
-            title: 'Save',
-            counter: couterProvider.counter,
-            delete: false,
-            // mySetState: mySetState
-          );
+          showDialog(
+              context: context,
+              builder: (context) {
+                final controller = TextEditingController();
+
+                return CupertinoAlertDialog(
+                  title: const Text('Save Dhikr'),
+                  content: Column(children: [
+                    SizedBox(height: 15),
+                    Text("${couterProvider.counter}"),
+                    SizedBox(height: 10),
+                    CupertinoTextField(
+                      controller: controller,
+                      placeholder: "Enyer title",
+                    ),
+                    TextButton(
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.all(blueCustom)),
+                        onPressed: () {
+                          context.read<DatabaseProvider>().addDhikr(Dhikr(
+                              counter: couterProvider.counter,
+                              title: controller.text,
+                              data: DateTime.now()));
+                          controller.dispose();
+                          context.pop();
+                        },
+                        child: Text('Save',
+                            style: TextStyle(color: Colors.white))),
+                    SizedBox(height: 20)
+                  ]),
+                );
+              });
         },
         child: Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 20),

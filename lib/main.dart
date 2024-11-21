@@ -1,3 +1,4 @@
+import 'package:alpha16/providers/database_provider.dart';
 import 'package:alpha16/providers/top_section_provider.dart';
 import 'package:alpha16/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class Alpha16 extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => CouterProvider()),
         ChangeNotifierProvider(create: (context) => TopSectionProvider()),
+        ChangeNotifierProvider(create: (context) => DatabaseProvider()),
       ],
       child: MaterialApp.router(
         theme: ThemeData(fontFamily: 'gilroy-bold'),

@@ -1,8 +1,14 @@
 import 'package:alpha16/constants/constants.dart';
+import 'package:alpha16/main.dart';
 import 'package:alpha16/models/dhikr.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/database_provider.dart';
 
 //Cписок  dhikrs
 //Виджет списка dhikrs
@@ -15,6 +21,7 @@ class DatabaseSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final databaseProvider = context.watch<DatabaseProvider>();
     return Expanded(
       child: Container(
         padding: EdgeInsets.only(top: 20, left: 15, right: 15),
@@ -33,14 +40,16 @@ class DatabaseSection extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: fakeDataBase.length,
+                  itemCount: databaseProvider.fakeDataBase.length,
                   itemBuilder: (context, index) {
-                    index = fakeDataBase.length - 1 - index;
+                    index = databaseProvider.fakeDataBase.length - 1 - index;
                     return WidgetApp(
-                        number: fakeDataBase[index].counter,
-                        date: DateFormat('EEE, d.M.y')
-                            .format(fakeDataBase[index].data),
-                        title: fakeDataBase[index].title);
+                      number: databaseProvider.fakeDataBase[index].counter,
+                      date: DateFormat('EEE, d.M.y')
+                          .format(databaseProvider.fakeDataBase[index].data),
+                      title: databaseProvider.fakeDataBase[index].title,
+                      index: index,
+                    );
                   }),
             ),
           ],
@@ -61,13 +70,16 @@ class WidgetApp extends StatelessWidget {
       {super.key,
       required this.number,
       required this.title,
-      required this.date});
+      required this.date,
+      required this.index});
+  int index;
   int number;
   String title;
   String date;
 
   @override
   Widget build(BuildContext context) {
+    final databaseProvider = context.watch<DatabaseProvider>();
     return Container(
       margin: EdgeInsets.only(bottom: 5),
       decoration: BoxDecoration(
@@ -98,12 +110,54 @@ class WidgetApp extends StatelessWidget {
                   fontFamily: 'gilroy-medium')),
           GestureDetector(
               onTap: () {
-                myAlertDialog(
-                  context: context,
-                  title: title,
-                  counter: number,
-                  delete: true,
-                );
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      final controller = TextEditingController();
+
+                      return CupertinoAlertDialog(
+                        title: Text('Edit Dhikr'),
+                        content: Column(children: [
+                          SizedBox(height: 15),
+                          Text("$number"),
+                          SizedBox(height: 10),
+                          CupertinoTextField(
+                            controller: controller,
+                            placeholder: title,
+                          ),
+                          SizedBox(height: 20),
+                          Row(
+                            children: [
+                              TextButton(
+                                  onPressed: () {
+                                    databaseProvider.removeDhikr(index);
+                                    context.pop();
+                                  },
+                                  child: Text(
+                                    'Delete',
+                                    style: TextStyle(color: Colors.red[300]),
+                                  )),
+                              TextButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          WidgetStateProperty.all(blueCustom)),
+                                  onPressed: () {
+                                    databaseProvider.upadateDhikr(
+                                        index,
+                                        Dhikr(
+                                            counter: number,
+                                            title: controller.text,
+                                            data: DateTime.now()));
+
+                                    context.pop();
+                                  },
+                                  child: Text('Save',
+                                      style: TextStyle(color: Colors.white)))
+                            ],
+                          )
+                        ]),
+                      );
+                    });
               },
               child: Container(
                   color: Colors.grey[100],
@@ -115,11 +169,3 @@ class WidgetApp extends StatelessWidget {
     );
   }
 }
-
-List<Dhikr> fakeDataBase = [
-  Dhikr(counter: 11, title: '1 title', data: DateTime.now()),
-  Dhikr(counter: 12, title: '2 title', data: DateTime.now()),
-  Dhikr(counter: 13, title: '3 title', data: DateTime.now()),
-  Dhikr(counter: 14, title: '4 title', data: DateTime.now()),
-  Dhikr(counter: 15, title: '5 title', data: DateTime.now()),
-];
