@@ -1,13 +1,11 @@
 import 'package:alpha16/constants/constants.dart';
-import 'package:alpha16/main.dart';
 import 'package:alpha16/models/dhikr.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
 import '../../providers/database_provider.dart';
 
 //Cписок  dhikrs
@@ -29,7 +27,7 @@ class DatabaseSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Last saved dhikrs",
+              "Last saved dhikrs".tr(),
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
             ),
             Container(
@@ -39,17 +37,29 @@ class DatabaseSection extends StatelessWidget {
               height: 3,
             ),
             Expanded(
-              child: ListView.builder(
-                  itemCount: databaseProvider.fakeDataBase.length,
-                  itemBuilder: (context, index) {
-                    index = databaseProvider.fakeDataBase.length - 1 - index;
-                    return WidgetApp(
-                      number: databaseProvider.fakeDataBase[index].counter,
-                      date: DateFormat('EEE, d.M.y')
-                          .format(databaseProvider.fakeDataBase[index].data),
-                      title: databaseProvider.fakeDataBase[index].title,
-                      index: index,
-                    );
+              child: FutureBuilder(
+                  future: context.read<DatabaseProvider>().openDhikrBox(),
+                  builder: (context, shapshot) {
+                    if (shapshot.connectionState != ConnectionState.done) {
+                      return Center(
+                        child: CupertinoActivityIndicator(),
+                      );
+                    } else {
+                      final box = context.read<DatabaseProvider>().box;
+
+                      return ListView.builder(
+                          itemCount: box.length,
+                          itemBuilder: (context, index) {
+                            index = box.length - 1 - index;
+                            return WidgetApp(
+                              number: box.getAt(index)?.counter.toInt() ?? 0,
+                              date: DateFormat('EEE, d.M.y').format(
+                                  box.getAt(index)?.date ?? DateTime.now()),
+                              title: box.getAt(index)?.title.toString() ?? "",
+                              index: index,
+                            );
+                          });
+                    }
                   }),
             ),
           ],
@@ -116,7 +126,7 @@ class WidgetApp extends StatelessWidget {
                       final controller = TextEditingController();
 
                       return CupertinoAlertDialog(
-                        title: Text('Edit Dhikr'),
+                        title: Text('Edit Dhikr'.tr()),
                         content: Column(children: [
                           SizedBox(height: 15),
                           Text("$number"),
@@ -134,7 +144,7 @@ class WidgetApp extends StatelessWidget {
                                     context.pop();
                                   },
                                   child: Text(
-                                    'Delete',
+                                    'Delete'.tr(),
                                     style: TextStyle(color: Colors.red[300]),
                                   )),
                               TextButton(
@@ -147,11 +157,11 @@ class WidgetApp extends StatelessWidget {
                                         Dhikr(
                                             counter: number,
                                             title: controller.text,
-                                            data: DateTime.now()));
+                                            date: DateTime.now()));
 
                                     context.pop();
                                   },
-                                  child: Text('Save',
+                                  child: Text('Save'.tr(),
                                       style: TextStyle(color: Colors.white)))
                             ],
                           )

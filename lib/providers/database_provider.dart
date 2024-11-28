@@ -1,32 +1,36 @@
 import 'package:flutter/cupertino.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../models/dhikr.dart';
 
 class DatabaseProvider extends ChangeNotifier {
-  List<Dhikr> fakeDataBase = [
-    Dhikr(counter: 11, title: '1 title', data: DateTime.now()),
-    Dhikr(counter: 12, title: '2 title', data: DateTime.now()),
-    Dhikr(counter: 13, title: '3 title', data: DateTime.now()),
-    Dhikr(counter: 14, title: '4 title', data: DateTime.now()),
-    Dhikr(counter: 15, title: '5 title', data: DateTime.now()),
-  ];
+  late Box<Dhikr> box;
+  Future<void> openDhikrBox() async {
+    box = await Hive.openBox("dhikrs");
+  }
 
   void removeDhikr(int index) {
-    fakeDataBase.removeAt(index);
+    box.deleteAt(index);
     notifyListeners();
   }
 
   void addDhikr(Dhikr dhikr) {
-    fakeDataBase.add(dhikr);
+    box.add(dhikr);
     notifyListeners();
   }
 
   void upadateDhikr(index, Dhikr newDhikr) {
-    fakeDataBase[index] = newDhikr;
+    box.putAt(index, newDhikr);
     notifyListeners();
   }
 
   void upadateDatabase() {
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    box.close();
+    super.dispose();
   }
 }

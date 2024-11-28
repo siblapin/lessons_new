@@ -1,6 +1,7 @@
 import 'package:alpha16/constants/constants.dart';
 
 import 'package:alpha16/providers/top_section_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,7 +45,7 @@ class _TopSectionState extends State<TopSection> {
                   child: Container(
                     child: Center(
                         child: Text(
-                      'Activity',
+                      'Activity'.tr(),
                       style: activity == true
                           ? TextStyle(color: Colors.white)
                           : TextStyle(color: blueCustom),
@@ -63,7 +64,7 @@ class _TopSectionState extends State<TopSection> {
                     child: Container(
                         child: Center(
                             child: Text(
-                          'Saved',
+                          'Saved'.tr(),
                           style: activity == false
                               ? TextStyle(color: Colors.white)
                               : TextStyle(color: greyCustom),

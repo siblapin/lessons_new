@@ -2,6 +2,7 @@ import 'package:alpha16/constants/constants.dart';
 import 'package:alpha16/models/dhikr.dart';
 import 'package:alpha16/providers/counter_provider.dart';
 import 'package:alpha16/providers/top_section_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,7 +46,7 @@ class CounterSection extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CurrentCounter(),
-                          Text("Dhikr",
+                          Text("Dhikr".tr(),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 12))
                         ]),
@@ -100,14 +101,14 @@ class SaveDhikr extends StatelessWidget {
                 final controller = TextEditingController();
 
                 return CupertinoAlertDialog(
-                  title: const Text('Save Dhikr'),
+                  title: Text('Save Dhikr'.tr()),
                   content: Column(children: [
                     SizedBox(height: 15),
                     Text("${couterProvider.counter}"),
                     SizedBox(height: 10),
                     CupertinoTextField(
                       controller: controller,
-                      placeholder: "Enyer title",
+                      placeholder: "Enyer title".tr(),
                     ),
                     TextButton(
                         style: ButtonStyle(
@@ -117,11 +118,11 @@ class SaveDhikr extends StatelessWidget {
                           context.read<DatabaseProvider>().addDhikr(Dhikr(
                               counter: couterProvider.counter,
                               title: controller.text,
-                              data: DateTime.now()));
+                              date: DateTime.now()));
                           controller.dispose();
                           context.pop();
                         },
-                        child: Text('Save',
+                        child: Text('Save'.tr(),
                             style: TextStyle(color: Colors.white))),
                     SizedBox(height: 20)
                   ]),
@@ -133,7 +134,7 @@ class SaveDhikr extends StatelessWidget {
           child: Container(
             child: Center(
               child: Text(
-                "Save dhikr",
+                "Save Dhikr".tr(),
                 style: TextStyle(color: blueCustom, fontSize: 14),
               ),
             ),
