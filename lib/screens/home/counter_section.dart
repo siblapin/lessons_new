@@ -31,42 +31,43 @@ class CounterSection extends StatelessWidget {
     return Visibility(
       visible: context.watch<TopSectionProvider>().activity,
       child: Container(
+          width: double.infinity,
+          height: 202,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(10))),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             GestureDetector(
                 onTap: () => couterProvider.del_number(),
-                child: Container(
+                child: SizedBox(
                     width: 35,
                     height: 35,
                     child: SvgPicture.asset('assets/images/Group2.svg'))),
             GestureDetector(
                 onTap: () => couterProvider.add_number(),
                 child: Container(
+                    decoration: BoxDecoration(
+                        color: blueCustom,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                    width: 154,
+                    height: 154,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CurrentCounter(),
+                          const CurrentCounter(),
                           Text("Dhikr".tr(),
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12))
-                        ]),
-                    decoration: BoxDecoration(
-                        color: blueCustom,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    width: 154,
-                    height: 154)),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 12))
+                        ]))),
             GestureDetector(
                 onTap: () => couterProvider.reset_number(),
-                child: Container(
-                    child: SvgPicture.asset('assets/images/Group3.svg'),
+                child: SizedBox(
                     width: 35,
-                    height: 35))
-          ]),
-          width: double.infinity,
-          height: 202,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10)))),
+                    height: 35,
+                    child: SvgPicture.asset('assets/images/Group3.svg')))
+          ])),
     );
   }
 }
@@ -80,7 +81,7 @@ class CurrentCounter extends StatelessWidget {
   Widget build(BuildContext context) {
     final couterProvider = context.watch<CouterProvider>();
     return Text("${couterProvider.counter}",
-        style: TextStyle(color: Colors.white, fontSize: 48));
+        style: const TextStyle(color: Colors.white, fontSize: 48));
   }
 }
 
@@ -103,9 +104,9 @@ class SaveDhikr extends StatelessWidget {
                 return CupertinoAlertDialog(
                   title: Text('Save Dhikr'.tr()),
                   content: Column(children: [
-                    SizedBox(height: 15),
+                    const SizedBox(height: 15),
                     Text("${couterProvider.counter}"),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     CupertinoTextField(
                       controller: controller,
                       placeholder: "Enyer title".tr(),
@@ -123,8 +124,8 @@ class SaveDhikr extends StatelessWidget {
                           context.pop();
                         },
                         child: Text('Save'.tr(),
-                            style: TextStyle(color: Colors.white))),
-                    SizedBox(height: 20)
+                            style: const TextStyle(color: Colors.white))),
+                    const SizedBox(height: 20)
                   ]),
                 );
               });
@@ -132,17 +133,17 @@ class SaveDhikr extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.only(top: 20, bottom: 20),
           child: Container(
+            width: double.infinity,
+            height: 45,
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(5))),
             child: Center(
               child: Text(
                 "Save Dhikr".tr(),
                 style: TextStyle(color: blueCustom, fontSize: 14),
               ),
             ),
-            width: double.infinity,
-            height: 45,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(5))),
           ),
         ),
       ),

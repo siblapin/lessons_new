@@ -19,15 +19,14 @@ class HomeScreen extends StatelessWidget {
             bottom: false,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Container(
-                  child: Column(
+              child: Column(
                 children: [
                   const TopSection(),
                   const CounterSection(),
                   SaveDhikr(),
                   const DatabaseSection()
                 ],
-              )),
+              ),
             )));
   }
 }

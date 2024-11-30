@@ -23,6 +23,11 @@ class DatabaseSection extends StatelessWidget {
     return Expanded(
       child: Container(
         padding: EdgeInsets.only(top: 20, left: 15, right: 15),
+        height: 500,
+        width: double.infinity,
+        decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,7 +46,7 @@ class DatabaseSection extends StatelessWidget {
                   future: context.read<DatabaseProvider>().openDhikrBox(),
                   builder: (context, shapshot) {
                     if (shapshot.connectionState != ConnectionState.done) {
-                      return Center(
+                      return const Center(
                         child: CupertinoActivityIndicator(),
                       );
                     } else {
@@ -64,11 +69,6 @@ class DatabaseSection extends StatelessWidget {
             ),
           ],
         ),
-        height: 500,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
       ),
     );
   }
@@ -91,7 +91,7 @@ class WidgetApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final databaseProvider = context.watch<DatabaseProvider>();
     return Container(
-      margin: EdgeInsets.only(bottom: 5),
+      margin: const EdgeInsets.only(bottom: 5),
       decoration: BoxDecoration(
           color: Colors.grey[100], borderRadius: BorderRadius.circular(10)),
       width: double.infinity,
@@ -99,7 +99,7 @@ class WidgetApp extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
+          SizedBox(
               width: 40,
               child: Center(
                   child: Text("$number",
@@ -109,11 +109,12 @@ class WidgetApp extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'gilroy-medium')))),
           Container(
-            margin: EdgeInsets.only(right: 30, left: 20),
-            child: Text("$title",
-                style: TextStyle(fontSize: 12, fontFamily: 'gilroy-bold')),
+            margin: const EdgeInsets.only(right: 30, left: 20),
+            child: Text(title,
+                style:
+                    const TextStyle(fontSize: 12, fontFamily: 'gilroy-bold')),
           ),
-          Text("$date",
+          Text(date,
               style: TextStyle(
                   fontSize: 10,
                   color: greyCustom,
@@ -128,14 +129,14 @@ class WidgetApp extends StatelessWidget {
                       return CupertinoAlertDialog(
                         title: Text('Edit Dhikr'.tr()),
                         content: Column(children: [
-                          SizedBox(height: 15),
+                          const SizedBox(height: 15),
                           Text("$number"),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           CupertinoTextField(
                             controller: controller,
                             placeholder: title,
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             children: [
                               TextButton(

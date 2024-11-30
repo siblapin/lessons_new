@@ -18,11 +18,11 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(DhikrAdapter());
   runApp(EasyLocalization(
-      supportedLocales: [Locale('en'), Locale('ru'), Locale('es')],
+      supportedLocales: const [Locale('en'), Locale('ru'), Locale('es')],
       path: 'assets/langs/langs.csv',
       assetLoader: CsvAssetLoader(),
-      fallbackLocale: Locale('ru'),
-      child: Alpha16()));
+      fallbackLocale: const Locale('ru'),
+      child: const Alpha16()));
 }
 
 class Alpha16 extends StatelessWidget {
@@ -53,8 +53,13 @@ class Alpha16 extends StatelessWidget {
 
 final _router = GoRouter(
   routes: [
-    GoRoute(path: '/', builder: (context, state) => HomeScreen(), routes: [
-      GoRoute(path: '/settings', builder: (context, state) => SettingsScreens())
-    ]),
+    GoRoute(
+        path: '/',
+        builder: (context, state) => const HomeScreen(),
+        routes: [
+          GoRoute(
+              path: '/settings',
+              builder: (context, state) => const SettingsScreens())
+        ]),
   ],
 );

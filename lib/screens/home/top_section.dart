@@ -32,10 +32,10 @@ class _TopSectionState extends State<TopSection> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
-              padding: EdgeInsets.all(4),
+              padding: const EdgeInsets.all(4),
               width: 276,
               height: 38,
               child: Row(children: [
@@ -43,18 +43,18 @@ class _TopSectionState extends State<TopSection> {
                 GestureDetector(
                   onTap: () => toggleActivity(true),
                   child: Container(
-                    child: Center(
-                        child: Text(
-                      'Activity'.tr(),
-                      style: activity == true
-                          ? TextStyle(color: Colors.white)
-                          : TextStyle(color: blueCustom),
-                    )),
                     decoration: BoxDecoration(
                         color: activity == true ? blueCustom : Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                     width: 134,
                     height: 30,
+                    child: Center(
+                        child: Text(
+                      'Activity'.tr(),
+                      style: activity == true
+                          ? const TextStyle(color: Colors.white)
+                          : TextStyle(color: blueCustom),
+                    )),
                   ),
                 ),
 
@@ -62,19 +62,20 @@ class _TopSectionState extends State<TopSection> {
                 GestureDetector(
                     onTap: () => toggleActivity(false),
                     child: Container(
+                        decoration: BoxDecoration(
+                            color:
+                                activity == false ? blueCustom : Colors.white,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(8))),
+                        width: 134,
+                        height: 30,
                         child: Center(
                             child: Text(
                           'Saved'.tr(),
                           style: activity == false
-                              ? TextStyle(color: Colors.white)
+                              ? const TextStyle(color: Colors.white)
                               : TextStyle(color: greyCustom),
-                        )),
-                        decoration: BoxDecoration(
-                            color:
-                                activity == false ? blueCustom : Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        width: 134,
-                        height: 30))
+                        ))))
               ])),
 
           //settings
@@ -83,13 +84,13 @@ class _TopSectionState extends State<TopSection> {
               context.go("/settings");
             },
             child: Container(
-              child:
-                  Center(child: SvgPicture.asset('assets/images/Group1.svg')),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               width: 54,
               height: 38,
+              child:
+                  Center(child: SvgPicture.asset('assets/images/Group1.svg')),
             ),
           )
         ],
